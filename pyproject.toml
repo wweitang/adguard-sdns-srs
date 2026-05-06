@@ -1,0 +1,8 @@
+[project]
+name = "adguard-sdns-srs"
+version = "0.1.0"
+description = "Build the official AdGuard DNS filter as a sing-box binary rule-set."
+readme = "README.md"
+requires-python = ">=3.12"
+license = "GPL-3.0-only"
+

@@ -1,0 +1,11 @@
+GPL-3.0-only
+
+This repository's source code and generated rule-set artifacts are distributed
+under GPL-3.0-only, matching the upstream AdGuardSDNSFilter license.
+
+Upstream filter:
+https://github.com/AdguardTeam/AdGuardSDNSFilter
+
+Full license text:
+https://www.gnu.org/licenses/gpl-3.0.txt
+

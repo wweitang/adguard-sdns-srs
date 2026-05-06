@@ -1,0 +1,72 @@
+name: Build AdGuard SDNS Rule Set
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "17 20 * * *"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: adguard-sdns-build
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      SING_BOX_VERSION: "1.13.11"
+      FILTER_URL: "https://adguardteam.github.io/AdGuardSDNSFilter/Filters/filter.txt"
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up uv
+        uses: astral-sh/setup-uv@v8.1.0
+        with:
+          enable-cache: true
+
+      - name: Install Python
+        run: uv python install
+
+      - name: Download sing-box
+        run: |
+          set -Eeuo pipefail
+          curl \
+            --fail \
+            --silent \
+            --show-error \
+            --location \
+            --retry 5 \
+            --retry-all-errors \
+            --connect-timeout 20 \
+            --max-time 180 \
+            "https://github.com/SagerNet/sing-box/releases/download/v${SING_BOX_VERSION}/sing-box-${SING_BOX_VERSION}-linux-amd64.tar.gz" \
+            --output sing-box.tar.gz
+          tar -xzf sing-box.tar.gz
+          install -m 0755 "sing-box-${SING_BOX_VERSION}-linux-amd64/sing-box" ./sing-box
+          ./sing-box version
+
+      - name: Build rule-set
+        run: |
+          SING_BOX_BIN="$PWD/sing-box" uv run --frozen python scripts/build.py
+
+      - name: Show metadata
+        run: |
+          cat dist/metadata.json
+          sha256sum dist/adguard-sdns.srs dist/adguard-sdns.txt
+
+      - name: Commit updated artifacts
+        run: |
+          set -Eeuo pipefail
+          if git diff --quiet -- dist; then
+            echo "No artifact changes."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add dist
+          git commit -m "Update AdGuard SDNS rule-set"
+          git push
