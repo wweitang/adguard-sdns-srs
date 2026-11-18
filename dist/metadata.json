@@ -1,24 +1,24 @@
 {
   "artifacts": {
     "adguard-sdns.srs": {
-      "bytes": 1693826,
-      "sha256": "5c9ce6dc670b29a856fb0f719ad8a6350aa81a92b9ff11eac3b2fa9b3a9213da"
+      "bytes": 1696608,
+      "sha256": "0d808709a5b23327836e043b16c2e88a2b56d83ef8aca10bba1a5690f8e01d83"
     },
     "adguard-sdns.txt": {
-      "bytes": 4660951,
-      "lines": 192313,
-      "sha256": "38f04274e1dd06ebb541422801668d21572eaef1952fcb707d6976c9fff57b61"
+      "bytes": 4670039,
+      "lines": 192720,
+      "sha256": "616b1ae6615991adfc36a83708e9439773e6e7e624c17bdc6414bb3330a13b40"
     }
   },
   "converter": {
     "command": "sing-box rule-set convert --type adguard",
     "sing_box_version": "sing-box version 1.13.11"
   },
-  "generated_at": "2026-11-17T02:57:17+00:00",
+  "generated_at": "2026-11-18T02:27:15+00:00",
   "source": {
     "description": "Filter composed of several other filters (AdGuard Base filter, Tracking Protection filter, Mobile ads filter, EasyList, EasyPrivacy, etc) and simplified specifically to be better compatible with DNS-level ad blocking.",
     "homepage": "https://github.com/AdguardTeam/AdguardSDNSFilter",
-    "last_modified": "2026-11-17T02:13:26.198Z",
+    "last_modified": "2026-11-18T02:13:28.545Z",
     "license": "https://github.com/AdguardTeam/AdguardSDNSFilter/blob/master/LICENSE",
     "title": "AdGuard DNS filter",
     "url": "https://adguardteam.github.io/AdGuardSDNSFilter/Filters/filter.txt"
